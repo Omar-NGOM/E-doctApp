@@ -1,59 +1,215 @@
-# EdocTApp - Intégration Django et Angular
+# EdocTApp - Application Médicale Django + Angular
 
-Ce projet intègre un backend Django avec un frontend Angular pour créer une application web complète.
+## 📋 Description
 
-## Structure du projet
+EdocTApp est une application web médicale complète intégrant :
 
-- `backend/` : API Django avec Django REST Framework
-- `frontend/EdoctApp/` : Application Angular
+- Backend : API Django avec Django REST Framework et JWT
+- Frontend : Application Angular moderne
+- Base de données : MySQL via MAMP
 
-## Configuration
+## 🏗️ Structure du projet
 
-### Backend (Django)
+EdocTApp/
+├── backend/                 # API Django
+│   ├── api/                # Application principale
+│   ├── backend/            # Configuration Django
+│   └── manage.py
+├── frontend/               # Application Angular
+│   └── EdoctApp/
+├── requirements.txt        # Dépendances Python
+└── README.md
 
-1. Activer l'environnement virtuel :
-   ```
-   cd venv/Scripts
-   activate
-   ```
+## 🚀 Installation et Configuration
 
-2. Lancer le serveur Django :
-   ```
-   cd ../../backend
-   python manage.py runserver
-   ```
-   Le serveur sera accessible à l'adresse http://localhost:8000/
+### Prérequis
+- Python 3.8+
+- Node.js 16+
+- MAMP (pour MySQL)
+- Git
+### 1. Cloner le projet
 
-### Frontend (Angular)
+git clone https://github.com/Omar-NGOM/E-doctApp.git
+cd EdocTApp
 
-1. Installer les dépendances (si ce n'est pas déjà fait) :
-   ```
-   cd frontend/EdoctApp
-   npm install
-   ```
+## Solution pour Augmenter la taille du buffer Git
 
-2. Lancer le serveur de développement Angular :
-   ```
-   ng serve
-   ```
-   L'application sera accessible à l'adresse http://localhost:4200/
+# Augmenter la taille du buffer HTTP
+git config http.postBuffer 524288000
 
-## Test de la connexion API
+# Augmenter le timeout
+git config http.lowSpeedLimit 0
+git config http.lowSpeedTime 999999
 
-1. Assurez-vous que les deux serveurs (Django et Angular) sont en cours d'exécution
-2. Accédez à http://localhost:4200/api-test dans votre navigateur
-3. Cliquez sur le bouton "Tester la connexion"
-4. Si tout est correctement configuré, vous devriez voir la réponse de l'API Django
+# Faire maintenant le push
+git push -u origin main
 
-## Points d'API disponibles
+### 2. Configuration du Backend (Django)
+#### 2.1 Créer et activer l'environnement virtuel
 
-- `GET /api/hello/` : Point de terminaison de test qui renvoie un message simple
+   # Créer l'environnement virtuel
+   python -m venv venv
 
-## Dépannage
+   # Activer l'environnement (macOS/Linux)
+   source venv/bin/activate
 
-Si vous rencontrez des problèmes de connexion :
+   # Activer l'environnement (Windows)
+   venv\Scripts\activate
 
-1. Vérifiez que les deux serveurs sont en cours d'exécution
-2. Assurez-vous que CORS est correctement configuré dans Django
-3. Vérifiez les erreurs dans la console du navigateur
-4. Vérifiez les logs du serveur Django
+#### 2.2 Installer les dépendances
+
+pip install -r requirements.txt
+
+## 2.3 Configuration de la base de données
+
+1. Démarrer MAMP et s'assurer que MySQL fonctionne sur le port 8889
+2. Créer la base de données :
+   - Aller sur http://localhost:8888/phpMyAdmin/
+   - Créer une base de données nommée edoctapp_db 
+
+## 2.4 Migrations de la base de données
+
+cd backend
+python manage.py makemigrations
+python manage.py migrate
+
+## 2.5 Créer un superutilisateur Django
+
+python manage.py createsuperuser
+
+Suivez les instructions pour créer votre compte administrateur :
+
+- Nom d'utilisateur : admin (ou votre choix)
+- Email : votre@email.com
+- Mot de passe : (choisissez un mot de passe sécurisé) 
+
+## 2.6 Lancer le serveur Django
+
+python manage.py runserver
+
+✅ Le serveur sera accessible à : http://127.0.0.1:8000/
+
+## 3. Configuration du Frontend (Angular) 
+
+#### 3.1 Installer les dépendances
+
+cd frontend/EdoctApp
+
+npm install
+
+## 3.2 Lancer le serveur Angular
+
+ng serve
+
+✅ L'application sera accessible à : http://localhost:4200/
+
+## 🔐 Accès à l'administration
+
+### Interface d'administration Django
+
+- URL : http://127.0.0.1:8000/admin/
+- Identifiants : Ceux créés avec createsuperuser
+
+### Fonctionnalités disponibles
+- Gestion des utilisateurs (Patients, Docteurs)
+- Gestion des rendez-vous
+- Gestion des consultations
+- Configuration du système
+
+## 📡 Points d'API disponibles
+
+Endpoint Méthode Description
+/api/hello/ GET Test de connexion
+/api/login/ POST Connexion utilisateur
+/api/register/ POST Inscription
+/api/patients/ GET/POST Gestion des patients
+/api/docteurs/ GET/POST Gestion des docteurs
+/api/rendezvous/ GET/POST Gestion des rendez-vous
+/api/token/ POST Obtenir un token JWT
+/api/token/refresh/ POST Rafraîchir le token
+
+## 🧪 Test de la connexion
+
+1. 1.
+   Backend : http://127.0.0.1:8000/api/hello/
+2. 2.
+   Frontend : http://localhost:4200/
+3. 3.
+   Admin : http://127.0.0.1:8000/admin/
+
+## 🔧 Commandes utiles
+
+### Django
+
+# Créer des migrations
+python manage.py makemigrations
+
+# Appliquer les migrations
+python manage.py migrate
+
+# Créer un superutilisateur
+python manage.py createsuperuser
+
+# Collecter les fichiers statiques
+python manage.py collectstatic
+
+# Lancer le serveur
+python manage.py runserver
+
+### Angular
+
+# Installer les dépendances
+npm install
+
+# Lancer en mode développement
+ng serve
+
+# Build pour la production
+ng build --prod
+
+# Générer un composant
+ng generate component nom-composant
+
+## 🐛 Dépannage
+### Problèmes courants
+
+1. Erreur de connexion à la base de données
+   
+   - Vérifiez que MAMP est démarré
+   - Vérifiez le port MySQL (8889)
+   - Vérifiez les identifiants dans settings.py
+2. Erreur CORS
+   
+   - Vérifiez la configuration CORS dans settings.py
+   - Redémarrez le serveur Django
+3. Erreur de migration
+
+python manage.py migrate --fake-initial
+
+4. Port déjà utilisé
+
+# Django sur un autre port
+python manage.py runserver 8001
+
+# Angular sur un autre port
+ng serve --port 4201
+
+## 🚀 Déploiement
+
+### Variables d'environnement pour la production
+Créez un fichier .env :
+
+DEBUG=False
+SECRET_KEY=votre-clé-secrète-très-longue
+DATABASE_URL=mysql://user:password@host:port/database
+ALLOWED_HOSTS=votre-domaine.com,www.votre-domaine.com
+
+## 📞 Support
+
+Pour toute question ou problème :
+
+- 📧 Email : support@edoctapp.com
+- 🐛 Issues : GitHub Issues
+
+
+EdocTApp - Développé avec ❤️ pour la santé digitale
